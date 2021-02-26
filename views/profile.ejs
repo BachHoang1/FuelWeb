@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/public/css/style.css' />
+  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="stylee.css">
+        <!-- <script defer src="signup-login.js"></script> -->
+
+    </head>
+    <body>
+        <main id="main-box">
+            <h1 id="client-header">Profile</h1>
+    
+            <form id="client-form" action="/users/add" method="POST">
+                <!-- <input type="text" name="userName" id="fn-field" class="fn-form-field" placeholder="First Name">  
+                <input type="text" name="lastname" id="ln-field" class="ln-form-field" placeholder="Last Name"> -->
+                <label for= "Full name">Full name: </label>
+                <input type="text" name="Full name" id="fullname-field" class="fullname-form-field" placeholder="required" maxlength = "50">
+                <label for= "address 1">Address 1: </label>
+                <input type="address 1" name="address 1" id="address-1-field" class="address-1-field" placeholder="required" maxlength = "100">
+                <label for= "address 2">Address 2: </label>
+                <input type="address 2" name="address 2" id="address-2-field" class="address-2-field" placeholder="optional" maxlength = "100">
+                <label for= "city">City: </label>
+                <input type="city" name="city" id="city" class="city-field" placeholder="required" maxlength = "100">
+                <label for= "State">State: </label>
+                <select name="State">
+                    <option value="TX">TX</option>
+                    <option value="LA">LA</option>
+                    <option value="NY">NY</option>
+                    <option value="AK">AK</option>
+                    <option value="AZ">AZ</option>
+                </select>
+                <label for= "zipcode">Zipcode: </label>
+                <input type="zipcode" name="zipcode" id="zipcode" class="zipcode-field" placeholder="required" min length = "5" maxlength = "9">
+                
+            </form>
+  
+        </main>
+    </body>
+
+</html>
