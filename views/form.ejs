@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/public/css/style.css' />
+  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FUEL</title>
+        <link rel="stylesheet" href="stylee.css">
+        <!-- <script defer src="signup-login.js"></script> -->
+
+    </head>
+    <body>
+        <main id="main-box">
+            <h1 id="fuel-header">Sign Up</h1>
+    
+            <form id="fuel-form" action="/users/add" method="POST">
+                <!-- <input type="text" name="userName" id="fn-field" class="fn-form-field" placeholder="First Name">  
+                <input type="text" name="lastname" id="ln-field" class="ln-form-field" placeholder="Last Name"> -->
+                <label for= "gallons">Gallons Requested: </label>
+                <input type="gallons" name="Gallons Requested " id="Gallons-field" class="Gallons-field" placeholder="required">
+                <label for= "address">Delivery Address: </label>
+                <label for= "date">Delivery Date: </label>
+                <input type="date" name="date" id="date">
+                <label for= "Full name">Suggested Price / gallon: </label>
+                <input type="suggested" name="suggested" id="suggested" class="suggested-field" placeholder="">
+                <label for= "Full name">Total Amount Due: </label>
+                
+            </form>
+  
+        </main>
+    </body>
+
+</html>
