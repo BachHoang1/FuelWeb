@@ -1,4 +1,4 @@
 # FuelWeb
-Open terminal and run npm install ejs express-ejs express-ejs-layouts
-Then start the server with npm test
+Open terminal and run npm install
+Then start the server with npm run dev
 Go on a Web browser and type http://localhost:3000/
