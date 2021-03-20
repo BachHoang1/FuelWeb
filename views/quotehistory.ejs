@@ -15,6 +15,9 @@
 
   <body>
     <div class="app-fuel quotehistory">
+      <div class="clearfix">
+        <a href="/logout" class="pull-right">Logout</a>
+      </div>
       <h2 class="text-center">Fuel Quote History</h2>
       <table class="table table-hover table-bordered">
         <tr>
@@ -24,35 +27,20 @@
           <th>Suggested Price</th>
           <th>Total Amount Due</th>
         </tr>
+        <% for(var i=0; i < history.length; i++) { %>
         <tr>
-          <td>10</td>
-          <td>123 Home, Houston TX 77077</td>
-          <td>02/02/2020</td>
-          <td>$2.5</td>
-          <td>$25.00</td>
+          <td><%= history[i].gallons %></td>
+          <td><%= history[i].deliveryAddress %></td>
+          <td><%= history[i].deliveryDate %></td>
+          <td>$ <%= history[i].suggestedPrice %></td>
+          <td>$ <%= history[i].amountDue %></td>
         </tr>
-        <tr>
-          <td>150</td>
-          <td>123 Home, Houston TX 77077</td>
-          <td>05/07/2020</td>
-          <td>$3.55</td>
-          <td>$532.50</td>
-        </tr>
-        <tr>
-          <td>70</td>
-          <td>123 Home, Houston TX 77077</td>
-          <td>06/20/2020</td>
-          <td>$1.54</td>
-          <td>$107.80</td>
-        </tr>
-        <tr>
-          <td>44</td>
-          <td>123 Home, Houston TX 77077</td>
-          <td>09/01/2020</td>
-          <td>$4.89</td>
-          <td>$215.16</td>
-        </tr>
+        <% } %>
       </table>
+      <div class="clearfix">
+        <a href="/profile" class="pull-left">Profile</a>
+        <a href="/quote" class="pull-right">Quote?</a>
+      </div>
     </div>
   </body>
 </html>

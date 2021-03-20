@@ -15,19 +15,14 @@
 
   <body>
     <div class="app-fuel">
-      <form action="/user/add" method="post">
+      <form action="/register" method="POST">
         <h2 class="text-center">Register New Account</h2>
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Username"
-            required="required"
-          />
-        </div>
+
         <div class="form-group">
           <input
             type="email"
+            id="email"
+            name="email"
             class="form-control"
             placeholder="Email"
             required="required"
@@ -36,6 +31,8 @@
         <div class="form-group">
           <input
             type="password"
+            id="password"
+            name="password"
             class="form-control"
             placeholder="Password"
             required="required"
@@ -43,12 +40,23 @@
         </div>
         <div class="form-group">
           <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            placeholder="Name"
+            required="required"
+          />
+        </div>
+        <!-- <div class="form-group">
+          <input
             type="password"
             class="form-control"
             placeholder="Confirm Password"
             required="required"
           />
-        </div>
+        </div> -->
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary btn-block">
             Sign Up

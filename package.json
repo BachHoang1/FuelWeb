@@ -1,27 +1,24 @@
 {
-  "name": "server",
+  "name": "fuelapp",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "node server.js"
+    "devStart": "nodemon server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BachHoang1/web.git"
-  },
-  "author": "BacH Hoang",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/BachHoang1/web/issues"
-  },
-  "homepage": "https://github.com/BachHoang1/web#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "express-ejs": "^2.0.0",
-    "express-ejs-layouts": "^2.5.0",
+    "express-flash": "0.0.2",
     "express-session": "^1.17.1",
-    "path": "^0.12.7"
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
   }
 }

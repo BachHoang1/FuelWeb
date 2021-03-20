@@ -1,124 +1,158 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
-//const expressLayouts = require('express-ejs-layouts');
 const app = express();
-const port = 3000;
-const { ROLE } = require('./data')
-const { authUser, authRole ,specificPath} = require('./basicAuth')
-const projectRouter = require('./routes/projects')
-const bodyParser = require('body-parser');
-const session = require('express-session')
-var path = require('path');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const flash = require('express-flash');
+const session = require('express-session');
 
-const SchemaUser = require("./models/User")
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json()); 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/projects', projectRouter)
+const initializePassport = require('./passport-config');
+initializePassport(
+  passport,
+  (email) => users.find((user) => user.email === email),
+  (id) => users.find((user) => user.id === id)
+);
 
+const users = [];
+
+app.set('view-engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded({ extended: false }));
+app.use(flash());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => {
-  res.redirect('/login');
+//Route History
+app.get('/', checkAuthenticated, (req, res) => {
+  if (req.user.isFirst) {
+    req.user.isFirst = false;
+    return res.redirect('/profile');
+  }
+  res.render('quotehistory.ejs', {
+    title: 'History',
+    history: req.user.history,
+  });
 });
 
-app.get('/login', (req, res) => {
+// Quote
+app.get('/quote', checkAuthenticated, (req, res) => {
+  res.render('quote.ejs', { title: 'Quote', user: req.user });
+});
+
+app.post('/quote', checkAuthenticated, (req, res) => {
+  userprofile = req.user.profile;
+  try {
+    req.user.history.push({
+      gallons: req.body.gallons,
+      deliveryAddress: `${userprofile.address}, ${userprofile.city} ${userprofile.state} ${userprofile.zipcode}`,
+      deliveryDate: req.body.deliveryDate,
+      suggestedPrice: req.body.suggestedPrice,
+      amountDue: 0.01,
+    });
+    res.redirect('/');
+  } catch (e) {
+    res.redirect('/quote');
+  }
+});
+
+// Profile Route
+app.get('/profile', checkAuthenticated, (req, res) => {
+  res.render('profile.ejs', { title: 'Profile', profile: req.user.profile });
+});
+
+app.post('/profile', checkAuthenticated, (req, res) => {
+  userprofile = req.user.profile;
+  try {
+    (req.user.profile = {
+      name: req.body.name,
+      address: req.body.address,
+      address2: req.body.address2,
+      city: req.body.city,
+      state: req.body.state,
+      zipcode: req.body.zipcode,
+    }),
+      res.redirect('/');
+  } catch (e) {
+    res.redirect('/profile');
+  }
+});
+
+// Login Route
+app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login.ejs', { title: 'Login' });
 });
 
-app.post('/login', (req, res) => {
-  console.log(req.session)
-      SchemaUser.findOne({ username: userName, password: password }, function (err, docs) {
-        if (err) {
-          console.log(err);
-          res.redirect(req.headers.referer)
-        }
-        if (docs !== null) {
-          console.log("login success: here are the information about that account")
-          console.log(docs)
-          //set all those requirement
-          req.session.userId = docs._id
-          req.session.userName = docs.username
-          req.session.userRole = docs.role
-          req.session.userSpecific = docs.path
+app.post(
+  '/login',
+  checkNotAuthenticated,
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true,
+  })
+);
 
-          for (eachRole in ROLE) {
-            if (docs.role === ROLE[eachRole].Name) {
-              req.session.userPath = ROLE[eachRole].path
-            }
-          }
-
-          console.log("might be bug!: userpath from session:" + req.session.userPath)
-          //THIS NEED TO RETURN SINCE IT WILL GO FURTHUR TO THE BELOW LINES
-          return res.redirect(req.session.userPath)
-        }
-
-        //error or if no USER has found --> redirect to the page
-        res.redirect(303, req.headers.referer + "?credential=invalid");
-        // res.redirect(req.headers.referer,{title:"test"});
-
-      })
-    });
-
-app.get('/register', (req, res) => {
+// Register Route
+app.get('/register', checkNotAuthenticated, (req, res) => {
   res.render('register.ejs', { title: 'Register' });
 });
 
-app.get("/logout", (req, res) => {
-  req.session.userId = null
-  req.session.userName = null
-  req.session.userRole = null
-  req.session.userPath = null
-  req.session.userSpecific = null
-  // console.log(req.session)
-  res.redirect(303, '/login?logout=success')
-})
-
-app.get('/profile', (req, res) => {
-  res.render('profile.ejs', { title: 'Profile' });
-});
-
-app.get('/quote', (req, res) => {
-  res.render('quote.ejs', { title: 'Quote' });
-});
-
-app.get('/quotehistory', (req, res) => {
-  res.render('quotehistory.ejs', { title: 'Quote History' });
-});
-
-/// RETRIEVE DATA
-app.get('/get_user_data', (req, res) => {
-  console.log("getting user data...")
-  SchemaUser.find({}, function (err, docs) {
-    if (err) {
-      console.log(err);
-      res.status(500)
-      return res.send("ERROR when access to DB - try again")
-    }
-    if (docs.length > 0) {
-      console.log(docs)
-      res.send(docs)
-    } else {
-      res.send({})
-    }
-  })
-})
-
-app.delete('/delete_user/:id', (req, res) => {
-  const { id } = req.params;
-  SchemaUser.deleteOne({ _id: id }, function (err) {
-    if (err) {
-      console.log(err)
-    }
-  })
-  res.send("ok")
-})
-
-app.listen(port, function (error) {
-  if (error) {
-    console.log('went wrong', error);
-  } else {
-    console.log('server is good ' + port);
+app.post('/register', checkNotAuthenticated, async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    users.push({
+      id: Date.now().toString(),
+      email: req.body.email,
+      password: hashedPassword,
+      isFirst: true,
+      profile: {
+        name: req.body.name,
+        address: '',
+        address2: '',
+        city: '',
+        state: '',
+        zipcode: '',
+      },
+      history: [],
+    });
+    res.redirect('/login');
+  } catch (e) {
+    res.redirect('/register');
   }
 });
+
+// Logout Route
+app.get('/logout', checkAuthenticated, (req, res) => {
+  req.logOut();
+  res.redirect('/login');
+});
+
+// Check Authenticated
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  res.redirect('/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
+}
+
+app.listen(process.env.PORT, () =>
+  console.log(`Server Up and running @ port: ${process.env.PORT}`)
+);
