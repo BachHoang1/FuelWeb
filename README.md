@@ -1,5 +1,5 @@
 # Fuel Quote
-To start up project locally you need to run mongodb and have nodejs installed. 
+To start up project locally you need to run mongodb and have nodejs installed.
 Install MongoDB with the link: https://www.mongodb.com/try/download/community
 Install nodejs with https://nodejs.dev/
 You then start the mongo server with 'mongo' in the command line 
