@@ -1,27 +1,30 @@
 {
-  "name": "fuelapp",
+  "name": "project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "searver.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
-  "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.1",
-    "ejs": "^3.1.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.6.2",
     "express": "^4.17.1",
-    "express-flash": "0.0.2",
-    "express-session": "^1.17.1",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "express-session": "^1.16.2",
+    "mongoose": "^5.6.2",
+    "passport": "^0.4.0",
+    "passport-http": "*",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1",
+    "semantic-modal": "^1.1.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-message": "^2.3.1"
   },
+  "license": "ISC",
   "devDependencies": {
-    "chai": "^4.3.4",
-    "dotenv": "^8.2.0",
-    "mocha": "^8.3.2",
-    "nodemon": "^2.0.7",
-    "supertest": "^6.1.3"
+    "nodemon": "^2.0.7"
   }
 }
