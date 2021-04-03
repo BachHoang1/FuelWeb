@@ -1,0 +1,24 @@
+<% include partials/header %>
+
+<h1 id="welcome">Welcome, <%=client.name.firstName%> <%=client.name.lastName%>!</h1>
+
+<div class="ui container segment">
+    <div class="ui first huge header" style="text-align: center;">My Dashboard</div>
+    <a href="/clients/home/getaquote" class="ui inverted orange button" id="gaq">Get A Quote</a>
+    <a href="/clients/home/quotehistory" class="ui inverted blue button" id="gqh">Quote History</a>
+    <div>
+        <div class="ui horizontal segments">
+            <div class="ui segment">
+                <strong>Name: </strong><%=client.name.firstName%> <%=client.name.lastName%>
+            </div>
+            <div class="ui segment">
+                <strong>Email: </strong><%=client.email%>
+            </div>
+            <div class="ui segment">
+                <strong>Username: </strong><%=client.username%>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>

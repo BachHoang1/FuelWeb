@@ -1,55 +1,36 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-  </head>
+<% include partials/header %>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="stylesheet" href="/style.css"> -->
+<div class="ui main text container segment" id="container">
+    <div class="ui huge header" style="text-align: center;">LOG IN</div>
+    <%if(message.type === 'error') {%>
+        <div class="ui negative message">
+            <i class="close icon"></i>
+            <div class="header"><i class="exclamation icon"></i><%=messageHeader%></div>
+            <div class="body"><%=messageBody%></div>
+        </div>
+    <%} else if(message.type === 'success') {%>
+        <div class="ui success message">
+            <i class="close icon"></i>
+            <div class="header"><i class="check icon"></i><%=messageHeader%></div>
+            <div class="body"><%=messageBody%></div>
+        </div>
+    <%} else if(message.type === 'warning') {%>
+        <div class="ui warning message">
+            <i class="close icon"></i>
+            <div class="header"><i class="exclamation icon"></i><%=messageHeader%></div>
+            <div class="body"><%=messageBody%></div>
+        </div>
+    <%}%>
+    <form class="ui form" action="/login" method="POST">
+        <div class="field">
+            <input type="text" name="username" placeholder="Username">
+        </div>
+        <div class="field">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <button type="text" class="ui green inverted button">Submit</button>
+        <a href="/" class="ui red inverted button">Cancel</a>
+    </form>
+</div>
 
-  <body>
-    <div class="app-fuel">
-      <form action="/login" method="POST">
-        <h2 class="text-center">Login</h2>
-        <p class="text-center" style="color: red">
-          <% if (messages.error) { %> <%= messages.error %> <% } %>
-        </p>
-        <div class="form-group">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            class="form-control"
-            placeholder="Email"
-            required="required"
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            placeholder="Password"
-            required="required"
-          />
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">
-            Log in
-          </button>
-        </div>
-        <div class="clearfix">
-          <a href="/register" class="pull-left">Register</a>
-          <a href="#" class="pull-right">Forgot Password?</a>
-        </div>
-      </form>
-    </div>
-  </body>
-</html>
+<% include partials/footer %>

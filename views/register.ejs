@@ -1,71 +1,60 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-  </head>
+<% include partials/header %>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="stylesheet" href="/style.css"> -->
+<div class="ui main text container segment" id="container">
+    <div class="ui huge header" style="text-align: center;">REGISTER</div>
+    <%if(message.type === 'error') {%>
+        <div class="ui negative message">
+            <i class="close icon"></i>
+            <div class="header"><i class="exclamation icon"></i><%=messageHeader%></div>
+            <div class="body"><%=messageBody%></div>
+        </div>
+    <%} else if(message.type === 'success') {%>
+        <div class="ui success message">
+            <i class="close icon"></i>
+            <div class="header"><i class="check icon"></i><%=messageHeader%></div>
+            <div class="body"><%=messageBody%></div>
+        </div>
+    <%}%>
+    <form class="ui form" action="/register" method="POST">
+        <%# Username %>
+        <div class="field">
+            <input type="text" name="registerusername" placeholder="Username" required>
+        </div>
+        <%# Initial Password %>
+        <div class="field">
+            <input type="password" name="registerpassword" placeholder="Password" required>
+        </div>
+        <%# Confirmation Password %>
+        <div class="field">
+            <input type="password" name="confirmpassword" placeholder="Confirm Password" required>
+        </div>
+        <%# Terms And Conditions %>
+        <div class="field">
+            <div class="ui checkbox">
+                <input type="checkbox" name="termsandconditions" required>
+                <label for="termsandconditions">I agree to the <a onclick="showTAC()">Terms and Conditions</a>.</label>                
+            </div>
+        </div>
+        <%# Buttons %>
+        <button type="submit" class="ui green inverted button">Submit</button>
+        <a href="/" class="ui red inverted button">Cancel</a>
+    </form>
+</div>
 
-  <body>
-    <div class="app-fuel">
-      <form action="/register" method="POST">
-        <h2 class="text-center">Register New Account</h2>
-
-        <div class="form-group">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            class="form-control"
-            placeholder="Email"
-            required="required"
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            placeholder="Password"
-            required="required"
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="name"
-            name="name"
-            class="form-control"
-            placeholder="Name"
-            required="required"
-          />
-        </div>
-        <!-- <div class="form-group">
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Confirm Password"
-            required="required"
-          />
-        </div> -->
-
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">
-            Sign Up
-          </button>
-        </div>
-        <div class="clearfix">
-          <a href="/login" class="pull-left">Login</a>
-        </div>
-      </form>
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">Terms and Conditions</div>
+    <div class="content">
+        <p>
+            Some terms and conditions.
+        </p>
     </div>
-  </body>
-</html>
+    <div class="actions">
+        <div class="ui positive right labeled icon button">
+            Agree
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>
