@@ -27,12 +27,6 @@ module.exports = {
             galFactor = 0.03;
         }
 
-        if(tools.inSummer(mon)) {
-            rfFactor = 0.04;
-        } else {
-            rfFactor = 0.03;
-        }
-
         margin = 1.50 * (locFactor - rhFactor + galFactor + compFactor + rfFactor);
         
         return (1.50 + margin).toFixed(2);
