@@ -2,11 +2,11 @@ const tools = require('../js/tools.js');
 
 module.exports = {
     getSuggestedPrice: function(loc, mon, qh, gal) {
-        let locFactor    = 0.0;
-        let rhFactor     = 0.0;
-        let galFactor    = 0.0;
-        let rfFactor     = 0.0;
-        let margin       = 0.0;
+        let locFactor    = 0.00;
+        let rhFactor     = 0.00;
+        let galFactor    = 0.00;
+        let rfFactor     = 0.00;
+        let margin       = 0.00;
         const compFactor = 0.10;
 
         if(tools.inState(loc)) {
@@ -18,7 +18,7 @@ module.exports = {
         if(tools.hasHistory(qh)) {
             rhFactor = 0.01;
         } else {
-            rhFactor = 0.0;
+            rhFactor = 0.00;
         }
 
         if(gal > 1000) {
@@ -29,9 +29,9 @@ module.exports = {
 
         margin = 1.50 * (locFactor - rhFactor + galFactor + compFactor + rfFactor);
         
-        return (1.50 + margin).toFixed(2);
+        return (1.50 + margin).toFixed(3);
     },
     getTotal: function(gallons, suggestedPrice) {
-        return (gallons * suggestedPrice).toFixed(2);
+        return (gallons * suggestedPrice).toFixed(3);
     }
 };
