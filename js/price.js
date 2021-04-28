@@ -1,7 +1,7 @@
 const tools = require('../js/tools.js');
 
 module.exports = {
-    getSuggestedPrice: function(loc, qh, gal) {
+    getSuggestedPrice: function(loc, mon, qh, gal) {
         let locFactor    = 0.0;
         let rhFactor     = 0.0;
         let galFactor    = 0.0;
