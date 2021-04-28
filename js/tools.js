@@ -3,6 +3,7 @@ module.exports = {
         return state === 'TX' ? true : false;
     },
     hasHistory: function(quoteHistory) {
-        return quoteHistory === undefined ? true : false;
+        console.log(quoteHistory.length)
+        return quoteHistory.length != 0 ? true : false;
     },
 };
