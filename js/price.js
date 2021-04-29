@@ -1,7 +1,7 @@
 const tools = require('../js/tools.js');
 
 module.exports = {
-    getSuggestedPrice: function(loc, mon, qh, gal) {
+    getSuggestedPrice: function(loc, qh, gal) {
         let locFactor    = 0.00;
         let rhFactor     = 0.00;
         let galFactor    = 0.00;
@@ -20,7 +20,7 @@ module.exports = {
             rhFactor = 0.00;
         }
 
-        if(gal > 1000) {
+        if(Math.abs(gal) > 1000) {
             galFactor = 0.02;
         } else {
             galFactor = 0.03;
@@ -31,6 +31,6 @@ module.exports = {
         return (1.50 + margin).toFixed(3);
     },
     getTotal: function(gallons, suggestedPrice) {
-        return (gallons * suggestedPrice).toFixed(3);
+        return (Math.abs(gallons) * suggestedPrice).toFixed(3);
     }
 };
