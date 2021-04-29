@@ -5,7 +5,6 @@ module.exports = {
         let locFactor    = 0.00;
         let rhFactor     = 0.00;
         let galFactor    = 0.00;
-        let rfFactor     = 0.00;
         let margin       = 0.00;
         const compFactor = 0.10;
 
@@ -27,7 +26,7 @@ module.exports = {
             galFactor = 0.03;
         }
 
-        margin = 1.50 * (locFactor - rhFactor + galFactor + compFactor + rfFactor);
+        margin = 1.50 * (locFactor - rhFactor + galFactor + compFactor);
         
         return (1.50 + margin).toFixed(3);
     },
