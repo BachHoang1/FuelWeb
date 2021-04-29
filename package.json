@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "mocha test",
+    "start": "node server.js",
+    "coverage": "nyc npm run test"
   },
   "author": "",
   "license": "ISC",
@@ -24,5 +25,10 @@
     "semantic-modal": "^1.1.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-message": "^2.3.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0"
   }
 }
