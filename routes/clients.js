@@ -70,11 +70,11 @@ router.post('/home/getaquote', (req, res) => {
   let deliveryDay = Number(req.body.quote.deliverydate.substring(3, 5));
   let suggested = price.getSuggestedPrice(
     req.user.address.state,
-    orderMonth,
+   // orderMonth,
     req.user.quoteHistory,
-    req.body.quote.gallons
+    Math.abs(req.body.quote.gallons)
   );
-  let total = price.getTotal(req.body.quote.gallons, suggested);
+  let total = price.getTotal(Math.abs(req.body.quote.gallons), suggested);
 
   console.log(orderMonth + ' ' + orderDay);
   console.log(deliveryMonth + ' ' + deliveryDay);
@@ -83,7 +83,7 @@ router.post('/home/getaquote', (req, res) => {
     new Date(req.body.quote.orderdate) < new Date(req.body.quote.deliverydate)
   ) {
     newQuote = new Quote({
-      gallons: req.body.quote.gallons,
+      gallons: Math.abs(req.body.quote.gallons),
       address: {
         street: req.user.address.street,
         city: req.user.address.city,
